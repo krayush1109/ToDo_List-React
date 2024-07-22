@@ -1,0 +1,73 @@
+/* styles.css */
+
+.app-container {
+    @apply border-t-2 w-full h-screen bg-zinc-800 flex items-center flex-col;
+}
+
+.header-container {
+    @apply mt-10 w-11/12 sm:w-3/4 md:w-2/4 lg:w-1/4 h-1/5 border rounded-3xl flex justify-around items-center;
+}
+
+.header-text {
+    @apply text-yellow-100;
+}
+
+.header-title {
+    @apply text-3xl font-bold;
+}
+
+.header-subtitle {
+    @apply text-yellow-100;
+}
+
+.counter {
+    @apply text-4xl font-extrabold flex justify-center items-center w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-full bg-orange-600;
+}
+
+.form-container {
+    @apply w-11/12 sm:w-3/4 md:w-2/4 lg:w-1/4 flex justify-between px-5 my-4;
+}
+
+.task-input {
+    @apply px-5 py-3 text-yellow-100 outline-none w-10/12 rounded-xl bg-zinc-700;
+}
+
+.add-button {
+    @apply outline-none text-4xl font-extrabold flex justify-center items-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-orange-600;
+}
+
+.task-list {
+    @apply list-none w-11/12 sm:w-3/4 md:w-2/4 lg:w-1/4;
+}
+
+.task-item {
+    @apply mb-5 flex justify-between items-center border rounded-xl p-5;
+}
+
+.task-details {
+    @apply flex items-center;
+}
+
+.task-status {
+    @apply mr-4 rounded-full w-8 h-8;
+}
+
+.task-title {
+    @apply text-2xl font-extrabold text-yellow-100;
+}
+
+.task-actions {
+    @apply flex gap-3 text-2xl text-yellow-100;
+}
+
+.task-title-completed {
+    @apply line-through text-2xl font-extrabold text-yellow-100;
+}
+
+.task-status-completed {
+    @apply mr-4 rounded-full w-8 h-8 bg-green-400;
+}
+
+.task-status-pending {
+    @apply mr-4 rounded-full w-8 h-8 border border-orange-600;
+}

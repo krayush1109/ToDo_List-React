@@ -1,11 +1,10 @@
 import React from 'react'
-import Todo from './Components/TodoX.jsx';
+
+import Todo
 
 const App = () => {
   return (
-    <>
-      <Todo />
-    </>
+    <div>App</div>
   )
 }
 
