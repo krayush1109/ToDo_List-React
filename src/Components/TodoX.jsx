@@ -4,8 +4,11 @@ import '../stylesheets/todo.css';
 import { completeTaskToggler, deleteHandler, submitFormHandler } from './Todo';
 
 const App = () => {
+    const storedTasks = JSON.parse(localStorage.getItem('TodoApp_React'))
+
     const [title, setTitle] = useState("")
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState(storedTasks || [])
+        
 
     let taskRender = (
         <h1 className='font-semibold text-red-500 text-3xl text-center' >No Tasks</h1>
@@ -39,7 +42,7 @@ const App = () => {
                         <p className="header-subtitle">Keeps doing things</p>
                     </div>
                     <div className="counter">
-                        1/3
+                        {(tasks.filter((item)=>item.isCompleted).length) }/{tasks.length}
                     </div>
                 </div>
                 <form className="form-container" onSubmit={(e) => submitFormHandler(e, title, setTitle, tasks, setTasks)}>
@@ -49,6 +52,7 @@ const App = () => {
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        required
                     />
                     <button className="add-button">
                         <i className="ri-add-fill"></i>

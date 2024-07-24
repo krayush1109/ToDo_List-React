@@ -14,7 +14,11 @@ const submitFormHandler = (event, title, setTitle, tasks, setTasks) => {
 
     //* ----- OR ----- *\
 
-    setTasks([...tasks, newTask]);
+    const updatedTasks = [...tasks, newTask]
+    setTasks(updatedTasks);
+
+    //todo: JSON.stringify(tasks) converts the tasks array into a JSON string:
+    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
 
     setTitle('');
 }
@@ -29,10 +33,11 @@ const completeTaskToggler = (index, tasks, setTasks) => {
 const deleteHandler = (index, tasks, setTasks) => {
     console.log("deleteHandler is working : ", index);
     
-    let updatedTask = tasks.filter((val, i) => i !== index);
+    let updatedTasks = tasks.filter((val, i) => i !== index);
 
     // setTasks([...updatedTask]);  // or
-    setTasks(updatedTask);
+    setTasks(updatedTasks);
+    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
 
     // / --------------------- \
     // let copyTasks = [...tasks];

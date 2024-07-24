@@ -53,7 +53,7 @@
 }
 
 .task-title {
-    @apply text-2xl font-extrabold text-yellow-100;
+    @apply text-2xl font-semibold text-yellow-100;
 }
 
 .task-actions {
@@ -61,7 +61,7 @@
 }
 
 .task-title-completed {
-    @apply line-through text-2xl font-extrabold text-yellow-100;
+    @apply line-through text-2xl font-semibold text-slate-500;
 }
 
 .task-status-completed {
