@@ -1,12 +1,12 @@
 import { nanoid } from "nanoid";
 
 const temp = () => { }
+const date = new Date();
 
-const submitFormHandler = (event, title, setTitle, tasks, setTasks) => {
+const submitFormHandler = (event, title, setTitle, tasks, setTasks, setActiveCategory) => {
     event.preventDefault();
     // console.log("External js file is working")
-
-    const newTask = { id: nanoid(), title, isCompleted: false }
+    const newTask = { id: nanoid(), title, isCompleted: false, createdAt: date.getTime(), completedAt: date.getTime() }
 
     // const copyTask = [...tasks];
     // copyTask.push(newTask)
@@ -21,19 +21,27 @@ const submitFormHandler = (event, title, setTitle, tasks, setTasks) => {
     localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
 
     setTitle('');
+    setActiveCategory('All');
 }
 
-const completeTaskToggler = (index, tasks, setTasks) => {
-    // console.log(index);    
+const completeTaskToggler = (id, tasks, setTasks) => {
+    console.log(id);
     // console.log(tasks[index].isCompleted);
-    tasks[index].isCompleted = !tasks[index].isCompleted;
-    setTasks([...tasks]);
+    // tasks[index].isCompleted = !tasks[index].isCompleted;
+    // setTasks([...tasks]);
+    
+    const updatedTaskList = tasks.map((task) => {
+        return id==task.id ? {...task, isCompleted: !task.isCompleted, completedAt: date.getTime()} : task
+    })
+    console.log(updatedTaskList);
+    setTasks(updatedTaskList);
+    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTaskList))
 }
 
-const deleteHandler = (index, tasks, setTasks) => {
-    console.log("deleteHandler is working : ", index);
+const deleteHandler = (id, tasks, setTasks) => {
+    console.log("deleteHandler is working : ", id);
     
-    let updatedTasks = tasks.filter((val, i) => i !== index);
+    let updatedTasks = tasks.filter((task) => id !== task.id );
 
     // setTasks([...updatedTask]);  // or
     setTasks(updatedTasks);

@@ -1,7 +1,7 @@
 /* styles.css */
 
 .app-container {
-    @apply border-t-2 w-full h-screen bg-zinc-800 flex items-center flex-col;
+    @apply border-t-2 w-full min-h-screen bg-zinc-800 flex items-center flex-col;
 }
 
 .header-container {
@@ -33,7 +33,7 @@
 }
 
 .add-button {
-    @apply outline-none text-4xl font-extrabold flex justify-center items-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-orange-600;
+    @apply ml-5 outline-none text-4xl font-extrabold flex justify-center items-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-orange-600;
 }
 
 .task-list {
@@ -70,4 +70,13 @@
 
 .task-status-pending {
     @apply mr-4 rounded-full w-8 h-8 border border-orange-600;
+}
+
+/* ---------- */
+
+.category-in-active{
+    @apply px-3 py-1 text-yellow-100 bg-orange-600 outline-none w-10/12 rounded-md font-bold cursor-pointer
+}
+.category-in{
+    @apply px-3 py-1 text-gray-400 bg-gray-700 outline-none w-10/12 rounded-md font-bold cursor-pointer
 }
