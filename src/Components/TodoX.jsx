@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../stylesheets/todo.css';
 
-import { completeTaskToggler, deleteHandler, submitFormHandler } from './Todo';
+import TodoUtilFun from './Todo';
+import { TaskContext } from '../context/TaskContext';
 
 const App = () => {
-    const storedTasks = JSON.parse(localStorage.getItem('TodoApp_React'))
 
-    const [title, setTitle] = useState("")
-    const [tasks, setTasks] = useState(storedTasks || [])
-    const [activeCategory, setActiveCategory] = useState("All");
+    const { title, setTitle, tasks, setTasks, activeCategory, setActiveCategory } = useContext(TaskContext);
+    // console.log("title", title);
+    const { completeTaskToggler, deleteHandler, submitFormHandler, formattedTime } = TodoUtilFun();
 
     const filteredTask = tasks.filter((task) => {
         if (activeCategory === "All")
@@ -17,7 +17,7 @@ const App = () => {
             return task.isCompleted == true;
         else if (activeCategory == "Incomplete")
             return task.isCompleted == false;
-    }).sort((a,b)=> b.completedAt - a.completedAt);
+    }).sort((a, b) => b.completedAt - a.completedAt);
 
     // console.log(filteredTask);
 
@@ -31,9 +31,15 @@ const App = () => {
                 <li key={task.id} className="task-item">
                     <div className="task-details">
                         <div onClick={() => completeTaskToggler(task.id, tasks, setTasks)} className={`task-status ${task.isCompleted ? 'task-status-completed' : 'task-status-pending'}`}></div>
-                        <h1 className={`${task.isCompleted ? 'task-title-completed' : 'task-title'}`}>
-                            {task.title}
-                        </h1>
+                        <div>
+
+                            <h1 className={`${task.isCompleted ? 'task-title-completed' : 'task-title'}`}>
+                                {task.title}
+                            </h1>
+                            <p className="task-date">
+                                {task.isCompleted ? `Completed at: ${formattedTime(task.completedAt)}` : `Created on: ${formattedTime(task.createdAt)}` }
+                            </p>
+                        </div>
                     </div>
                     <div className="task-actions">
                         <i className="ri-file-edit-line"></i>
@@ -56,7 +62,7 @@ const App = () => {
                         {(tasks.filter((item) => item.isCompleted).length)}/{tasks.length}
                     </div>
                 </div>
-                <form className="form-container" onSubmit={(e) => submitFormHandler(e, title, setTitle, tasks, setTasks, setActiveCategory)}>
+                <form className="form-container" onSubmit={(e) => submitFormHandler(e)}>
                     <input
                         placeholder="write your next task..."
                         className="task-input"
@@ -71,9 +77,9 @@ const App = () => {
                 </form>
 
                 <section id='category' className='flex gap-5 my-3' >
-                    <h1 className={`${activeCategory == "All" ? 'category-in-active' : 'category-in'} `} onClick={()=> setActiveCategory('All')} >All</h1>
-                    <h1 className={`${activeCategory == "Incomplete" ? 'category-in-active' : 'category-in'} `} onClick={()=> setActiveCategory('Incomplete')} >Incomplete</h1>
-                    <h1 className={`${activeCategory == "Completed" ? 'category-in-active' : 'category-in'} `} onClick={()=> setActiveCategory('Completed')} >Completed</h1>
+                    <h1 className={`${activeCategory == "All" ? 'category-in-active' : 'category-in'} `} onClick={() => setActiveCategory('All')} >All</h1>
+                    <h1 className={`${activeCategory == "Incomplete" ? 'category-in-active' : 'category-in'} `} onClick={() => setActiveCategory('Incomplete')} >Incomplete</h1>
+                    <h1 className={`${activeCategory == "Completed" ? 'category-in-active' : 'category-in'} `} onClick={() => setActiveCategory('Completed')} >Completed</h1>
                 </section>
 
                 <ul className="task-list">

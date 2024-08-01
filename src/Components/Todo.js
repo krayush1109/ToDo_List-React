@@ -1,58 +1,73 @@
 import { nanoid } from "nanoid";
+import { useContext } from "react";
+import { TaskContext } from "../context/TaskContext";
 
-const temp = () => { }
 const date = new Date();
+const Todo = () => {
+    const { title, setTitle, tasks, setTasks, activeCategory, setActiveCategory } = useContext(TaskContext);
 
-const submitFormHandler = (event, title, setTitle, tasks, setTasks, setActiveCategory) => {
-    event.preventDefault();
-    // console.log("External js file is working")
-    const newTask = { id: nanoid(), title, isCompleted: false, createdAt: date.getTime(), completedAt: date.getTime() }
+    // console.log(title)
+    const submitFormHandler = (event) => {
+        event.preventDefault();
 
-    // const copyTask = [...tasks];
-    // copyTask.push(newTask)
-    // setTasks(copyTask)
+        // console.log("External js file is working")
+        const newTask = { id: nanoid(), title, isCompleted: false, createdAt: date.getTime(), completedAt: date.getTime() }
 
-    //* ----- OR ----- *\
+        // const copyTask = [...tasks];
+        // copyTask.push(newTask)
+        // setTasks(copyTask)
 
-    const updatedTasks = [...tasks, newTask]
-    setTasks(updatedTasks);
+        //* ----- OR ----- *\
 
-    //todo: JSON.stringify(tasks) converts the tasks array into a JSON string:
-    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
+        const updatedTasks = [...tasks, newTask]
+        setTasks(updatedTasks);
 
-    setTitle('');
-    setActiveCategory('All');
+        //todo: JSON.stringify(tasks) converts the tasks array into a JSON string:
+        localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
+
+        setTitle('');
+        setActiveCategory('All');
+    }
+
+    const completeTaskToggler = (id, tasks, setTasks) => {
+        // console.log(id);
+        // console.log(tasks[index].isCompleted);
+        // tasks[index].isCompleted = !tasks[index].isCompleted;
+        // setTasks([...tasks]);
+
+        const updatedTaskList = tasks.map((task) => {
+            return id == task.id ? { ...task, isCompleted: !task.isCompleted, completedAt: date.getTime() } : task
+        })
+        // console.log(updatedTaskList);
+        setTasks(updatedTaskList);
+        localStorage.setItem('TodoApp_React', JSON.stringify(updatedTaskList))
+    }
+
+    const deleteHandler = (id, tasks, setTasks) => {
+        console.log("deleteHandler is working : ", id);
+
+        let updatedTasks = tasks.filter((task) => id !== task.id);
+
+        // setTasks([...updatedTask]);  // or
+        setTasks(updatedTasks);
+        localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
+
+        // / --------------------- \
+        // let copyTasks = [...tasks];
+        // copyTasks.splice(index, 1);
+        // setTasks(copyTasks);
+        // \ --------------------- /
+    }
+
+    const formattedTime = (yourDate) => new Date(yourDate).toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true // Set to false for 24-hour format
+    });
+
+
+    return { completeTaskToggler, deleteHandler, submitFormHandler, formattedTime }
 }
 
-const completeTaskToggler = (id, tasks, setTasks) => {
-    console.log(id);
-    // console.log(tasks[index].isCompleted);
-    // tasks[index].isCompleted = !tasks[index].isCompleted;
-    // setTasks([...tasks]);
-    
-    const updatedTaskList = tasks.map((task) => {
-        return id==task.id ? {...task, isCompleted: !task.isCompleted, completedAt: date.getTime()} : task
-    })
-    console.log(updatedTaskList);
-    setTasks(updatedTaskList);
-    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTaskList))
-}
-
-const deleteHandler = (id, tasks, setTasks) => {
-    console.log("deleteHandler is working : ", id);
-    
-    let updatedTasks = tasks.filter((task) => id !== task.id );
-
-    // setTasks([...updatedTask]);  // or
-    setTasks(updatedTasks);
-    localStorage.setItem('TodoApp_React', JSON.stringify(updatedTasks))
-
-    // / --------------------- \
-    // let copyTasks = [...tasks];
-    // copyTasks.splice(index, 1);
-    // setTasks(copyTasks);
-    // \ --------------------- /
-}
-
-export default temp;
-export { submitFormHandler, completeTaskToggler, deleteHandler };
+// const temp = null;
+export default Todo;

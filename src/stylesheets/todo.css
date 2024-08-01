@@ -56,6 +56,11 @@
     @apply text-2xl font-semibold text-yellow-100;
 }
 
+.task-date {
+    font-size: 0.875rem;
+    color: #888;
+}
+
 .task-actions {
     @apply flex gap-3 text-2xl text-yellow-100;
 }
