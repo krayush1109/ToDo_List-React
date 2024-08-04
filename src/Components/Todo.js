@@ -1,6 +1,8 @@
 import { nanoid } from "nanoid";
 import { useContext } from "react";
 import { TaskContext } from "../context/TaskContext";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const date = new Date();
 const Todo = () => {
@@ -9,6 +11,7 @@ const Todo = () => {
     // console.log(title)
     const submitFormHandler = (event) => {
         event.preventDefault();
+        toast("Task Created");
 
         // console.log("External js file is working")
         const newTask = { id: nanoid(), title, isCompleted: false, createdAt: date.getTime(), completedAt: date.getTime() }
@@ -36,16 +39,34 @@ const Todo = () => {
         // setTasks([...tasks]);
 
         const updatedTaskList = tasks.map((task) => {
-            return id == task.id ? { ...task, isCompleted: !task.isCompleted, completedAt: date.getTime() } : task
+            // return id == task.id ? { ...task, isCompleted: !task.isCompleted, completedAt: date.getTime(), } : task
+
+            if (id == task.id) {
+                if (task.isCompleted) {
+                    toast("⛔ Task completion status removed")
+                    return {
+                        ...task, isCompleted: false, completedAt: date.getTime(),
+                    }
+                } else {
+                    toast("✅ Task Completed");
+                    return {
+                        ...task, isCompleted: true, completedAt: date.getTime(),
+                    }
+                }
+            } else {
+                return task;
+            }
+
         })
+
         // console.log(updatedTaskList);
         setTasks(updatedTaskList);
         localStorage.setItem('TodoApp_React', JSON.stringify(updatedTaskList))
     }
 
     const deleteHandler = (id, tasks, setTasks) => {
+        toast("🗑️ Task Deleted");
         console.log("deleteHandler is working : ", id);
-
         let updatedTasks = tasks.filter((task) => id !== task.id);
 
         // setTasks([...updatedTask]);  // or

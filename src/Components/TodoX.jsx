@@ -3,6 +3,7 @@ import '../stylesheets/todo.css';
 
 import TodoUtilFun from './Todo';
 import { TaskContext } from '../context/TaskContext';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
 
@@ -37,7 +38,7 @@ const App = () => {
                                 {task.title}
                             </h1>
                             <p className="task-date">
-                                {task.isCompleted ? `Completed at: ${formattedTime(task.completedAt)}` : `Created on: ${formattedTime(task.createdAt)}` }
+                                {task.isCompleted ? `Completed at: ${formattedTime(task.completedAt)}` : `Created on: ${formattedTime(task.createdAt)}`}
                             </p>
                         </div>
                     </div>
@@ -114,6 +115,7 @@ const App = () => {
                 </ul>
 
             </div>
+            <ToastContainer />
         </>
     );
 };
